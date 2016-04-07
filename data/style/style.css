@@ -1,0 +1,9 @@
+
+PantheonTweaksSideBarItem {
+    padding: 5px;
+}
+
+PantheonTweaksSideBarItem .label {
+    font: Open Sans 11;
+    padding-left: 6px;
+}

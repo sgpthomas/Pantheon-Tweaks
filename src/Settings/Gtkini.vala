@@ -1,0 +1,79 @@
+
+namespace PantheonTweaks {
+
+    /**
+     * Settings for Gtk; thanks gnome-tweak-tool for the help!
+     */
+    public class Settings.Gtkini : GLib.Object {
+        private GLib.KeyFile keyfile;
+        private string path;
+        private static Gtkini? instance = null;
+
+        /**
+         * GTK should prefer the dark theme or not
+         */
+        public bool prefer_dark_theme {
+            get { return (get_integer ("gtk-application-prefer-dark-theme") == 1); }
+            set { set_integer ("gtk-application-prefer-dark-theme", value ? 1 : 0); }
+        }
+
+        /**
+         * Creates a new GTKSettings
+         */
+        private Gtkini () {
+            keyfile = new GLib.KeyFile ();
+
+            try {
+                path = GLib.Environment.get_user_config_dir () + "/gtk-3.0/settings.ini";
+                keyfile.load_from_file (path, 0);
+            }
+            catch (Error e) {
+                warning ("Error loading GTK+ Keyfile settings.ini: " + e.message);
+            }
+        }
+
+        public static Gtkini get_default () {
+            if (instance == null)
+                instance = new Gtkini ();
+
+            return instance;
+        }
+
+        /**
+         * Gets an integer from the keyfile at Settings group
+         */
+        private int get_integer (string key) {
+            int key_int = 0;
+
+            try {
+                key_int = keyfile.get_integer ("Settings", key);
+            }
+            catch (Error e) {
+                warning ("Error getting GTK+ int setting: " + e.message);
+            }
+
+            return key_int;
+        }
+
+        /**
+         * Sets an integer from the keyfile at Settings group
+         */
+        private void set_integer (string key, int val) {
+            keyfile.set_integer ("Settings", key, val);
+            save_keyfile ();
+        }
+
+        /**
+         * Saves the keyfile to disk
+         */
+        private void save_keyfile () {
+            try {
+                string data = keyfile.to_data ();
+                GLib.FileUtils.set_contents (path, data);
+            }
+            catch (GLib.FileError e) {
+                warning ("Error saving GTK+ Keyfile settings.ini: " + e.message);
+            }
+        }
+    }
+}
