@@ -5,11 +5,14 @@ namespace PantheonTweaks {
         private Gtk.Box content;
         private SettingsHeader header;
 
+        //private Gtk.ScrolledWindow scroll;
+
         public SettingsEditor () {
             Object (orientation: Gtk.Orientation.VERTICAL,
                     spacing: 0);
 
             content = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            //scroll = new Gtk.ScrolledWindow (null, null);
 
             this.margin = 12;
             build_ui ();
@@ -21,6 +24,7 @@ namespace PantheonTweaks {
 
             this.add (header);
             this.add (content);
+            //this.add (scroll);
         }
 
         public void show_setting (Options.Option setting) {
@@ -31,9 +35,14 @@ namespace PantheonTweaks {
             foreach (var child in content.get_children ()) {
                 child.destroy ();
             }
+            //foreach (var child in scroll.get_children ()) {
+            //    child.destroy ();
+            //}
 
             content.add (setting.get_content ());
             content.show_all ();
+            //scroll.add (setting.get_content ());
+            //scroll.show_all ();
         }
     }
 }

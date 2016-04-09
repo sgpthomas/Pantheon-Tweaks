@@ -55,7 +55,6 @@ namespace PantheonTweaks {
             stack.show_all ();
 
             if (show_alert) {
-                message ("show alert view");
                 stack.set_visible_child_name ("alert");
             } else {
                 stack.set_visible_child_name ("main");
@@ -97,14 +96,14 @@ private void load_stylesheet () {
     try {
         provider.load_from_path (css_file);
         Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_USER);
-        message ("Loaded %s", css_file);
+        // message ("Loaded %s", css_file);
     } catch (Error e) {
         error ("Error with stylesheet: %s", e.message);
     }
 }
 
 public Switchboard.Plug get_plug (Module module) {
-    message ("Activating Pantheon Tweaks");
+    // message ("Activating Pantheon Tweaks");
     load_stylesheet ();
     var plug = new PantheonTweaks.Plug ();
     return plug;

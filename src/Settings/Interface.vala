@@ -1,7 +1,7 @@
 
-namespace PantheonTweaks {
+namespace PantheonTweaks.Settings {
 
-    public class Settings.Interface : Granite.Services.Settings {
+    public class Interface : Granite.Services.Settings {
 
         // fonts
         public string font_name { get; set; }

@@ -14,12 +14,15 @@ include (ValaPrecompile)
 # Add all your vala files and requires packages to the List below to include them in the build
 vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
     Plug.vala
-    Options/AppearanceOption.vala
-    Options/FontOption.vala
+    Options/Appearance.vala
+    Options/Font.vala
     Options/Option.vala
-    Options/TerminalOption.vala
+    Options/Terminal.vala
+    Options/Window.vala
+    Settings/GalaAppearance.vala
     Settings/Gtkini.vala
     Settings/Interface.vala
+    Settings/WM.vala
     Views/AlertView.vala
     Views/MainView.vala
     Widgets/OptionUtilities.vala

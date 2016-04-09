@@ -11,8 +11,11 @@ namespace PantheonTweaks {
             sidebar = new Widgets.SideBar ();
             editor = new Widgets.SettingsEditor ();
 
+            var scroll = new Gtk.ScrolledWindow (null, null);
+            scroll.add (editor);
+
             this.add1 (sidebar);
-            this.add2 (editor);
+            this.add2 (scroll);
 
             sidebar.select_row (sidebar.get_row_at_index (1));
 

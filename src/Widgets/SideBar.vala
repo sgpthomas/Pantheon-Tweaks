@@ -38,9 +38,10 @@ namespace PantheonTweaks {
         }
 
         private void build_ui () {
-            add_setting (new Options.AppearanceOption ());
-            add_setting (new Options.FontOption ());
-            add_setting (new Options.TerminalOption ());
+            add_setting (new Options.Appearance ());
+            add_setting (new Options.Font ());
+            add_setting (new Options.Window ());
+            add_setting (new Options.Terminal ());
         }
 
         private void connect_signals () {

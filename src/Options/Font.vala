@@ -1,7 +1,7 @@
 
 namespace PantheonTweaks {
 
-    public class Options.FontOption : GLib.Object, Option {
+    public class Options.Font : GLib.Object, Option {
 
         // interface methods
         public string get_icon_name () {

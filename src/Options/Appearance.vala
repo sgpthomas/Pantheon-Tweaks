@@ -1,7 +1,7 @@
 
 namespace PantheonTweaks {
 
-    public class Options.AppearanceOption : GLib.Object, Option {
+    public class Options.Appearance : GLib.Object, Option {
 
         // interface methods
         public string get_icon_name () {

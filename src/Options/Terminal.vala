@@ -1,7 +1,7 @@
 
 namespace PantheonTweaks {
 
-    public class Options.TerminalOption : GLib.Object, Option {
+    public class Options.Terminal : GLib.Object, Option {
 
         // interface methods
         public string get_icon_name () {

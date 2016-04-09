@@ -3,14 +3,33 @@ namespace PantheonTweaks.Widgets {
 
     public delegate void Revert();
 
+    public static void add_category (Gtk.Grid grid, string name, ref int row) {
+        var label = new Gtk.Label (name);
+        label.get_style_context ().add_class ("h4");
+
+        label.hexpand = true;
+        label.valign = Gtk.Align.CENTER;
+        label.halign = Gtk.Align.START;
+
+        grid.attach (label, 0, row);
+
+        row ++;
+    }
+
     public static void add_option (Gtk.Grid grid, string title, Gtk.Widget option, ref int row, Revert revert, string des = "", string warn = "") {
         var label = new Gtk.Label (title + ":");
         label.hexpand = true;
         label.halign = Gtk.Align.END;
+        label.valign = Gtk.Align.CENTER;
 
-        if (!(option is Gtk.ComboBox)) {
+        if (option is Gtk.ComboBox) {
+            option.halign = Gtk.Align.FILL;
+        } else if (option is Gtk.Scale) {
+            option.halign = Gtk.Align.FILL;
+        } else {
             option.halign = Gtk.Align.START;
         }
+
         option.valign = Gtk.Align.CENTER;
 
         grid.attach (label, 0, row);
