@@ -89,7 +89,7 @@ namespace PantheonTweaks {
             });
 
             // automatically raise windows
-            description = """If set to true, and the focus mode is either "sloppy" or "mouse" then the focused window will be automatically raised after a delay specified by the auto-raise-delay key. This is not related to clicking on a window to raise it, nor to entering a window during drag-and-drop.""";
+            description = """If turned on, and the focus mode is either "sloppy" or "mouse" then the focused window will be automatically raised after a delay specified by the auto-raise-delay key. This is not related to clicking on a window to raise it, nor to entering a window during drag-and-drop.""";
             Widgets.add_option (grid, "Automatically Raise Windows", auto_raise_toggle, ref row, () => {
                     Settings.WM.get_default ().schema.reset ("auto-raise");
                 }, description);
@@ -108,22 +108,43 @@ namespace PantheonTweaks {
             var double_combo = new Gtk.ComboBoxText ();
             description = "Action that occurs when the titlebar is double-clicked";
             Widgets.add_option (grid, "Double-click", double_combo, ref row, () => {
-                    // reset
+                    Settings.WM.get_default ().schema.reset ("action-double-click-titlebar");
                 }, description);
+            foreach (var key in Settings.WM.get_titlebar_actions ().keys) {
+                double_combo.append (key, Settings.WM.get_titlebar_actions ().get (key));
+            }
+            double_combo.set_active_id (Settings.WM.get_default ().action_double_click_titlebar);
+            double_combo.changed.connect (() => {
+                Settings.WM.get_default ().action_double_click_titlebar = double_combo.get_active_id ();
+            });
 
             // middle click combo
             var middle_combo = new Gtk.ComboBoxText ();
             description = "Action that occurs when the titlebar is middle-clicked";
             Widgets.add_option (grid, "Middle-click", middle_combo, ref row, () => {
-                    // reset
+                    Settings.WM.get_default ().schema.reset ("action-middle-click-titlebar");
                 }, description);
+            foreach (var key in Settings.WM.get_titlebar_actions ().keys) {
+                middle_combo.append (key, Settings.WM.get_titlebar_actions ().get (key));
+            }
+            middle_combo.set_active_id (Settings.WM.get_default ().action_middle_click_titlebar);
+            middle_combo.changed.connect (() => {
+                Settings.WM.get_default ().action_middle_click_titlebar = middle_combo.get_active_id ();
+            });
 
             // secondary click combo
             var secondary_combo = new Gtk.ComboBoxText ();
             description = "Action that occurs when the titlebar is secondary-clicked";
             Widgets.add_option (grid, "Secondary-clicked", secondary_combo, ref row, () => {
-                    // reset
+                    Settings.WM.get_default ().schema.reset ("action-right-click-titlebar");
                 }, description);
+            foreach (var key in Settings.WM.get_titlebar_actions ().keys) {
+                secondary_combo.append (key, Settings.WM.get_titlebar_actions ().get (key));
+            }
+            secondary_combo.set_active_id (Settings.WM.get_default ().action_right_click_titlebar);
+            secondary_combo.changed.connect (() => {
+                Settings.WM.get_default ().action_right_click_titlebar = secondary_combo.get_active_id ();
+            });
 
             /* Titlebar Buttons */
             Widgets.add_category (grid, "Window Control Layout", ref row);
@@ -138,7 +159,7 @@ namespace PantheonTweaks {
             Widgets.add_category (grid, "HiDPI", ref row);
 
             // window scaling
-            var scale_slider = new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0, 2, 1);
+            var scale_slider = new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0.0, 2.0, 1.0);
             scale_slider.set_value_pos (Gtk.PositionType.RIGHT);
             scale_slider.format_value.connect ((val) => {
                 if (val == 0) {
@@ -148,13 +169,21 @@ namespace PantheonTweaks {
             });
             description = "Factor used to scale windows and Gtk elements";
             Widgets.add_option (grid, "Window Scaling", scale_slider, ref row, () => {
-                    // reset
+                    Settings.Interface.get_default ().schema.reset ("scaling-factor");
                 }, description);
+            scale_slider.set_value ((int) Settings.Interface.get_default ().scaling_factor);
+            scale_slider.value_changed.connect (() => {
+                Settings.Interface.get_default ().scaling_factor = (uint32) scale_slider.get_value ();
+            });
 
             /* Update all the things */
             Settings.WM.get_default ().changed.connect (() => {
                 window_action_combo.set_active_id (Settings.WM.get_default ().mouse_button_modifier);
                 focus_mode_combo.set_active_id (Settings.WM.get_default ().focus_mode);
+                double_combo.set_active_id (Settings.WM.get_default ().action_double_click_titlebar);
+                middle_combo.set_active_id (Settings.WM.get_default ().action_middle_click_titlebar);
+                secondary_combo.set_active_id (Settings.WM.get_default ().action_right_click_titlebar);
+                // scale_slider.set_value (Settings.Interface.get_default ().scaling_factor);
             });
 
             /* Add Grid to box and return it */

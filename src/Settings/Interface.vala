@@ -13,6 +13,9 @@ namespace PantheonTweaks.Settings {
         public string gtk_theme { get; set; }
         public string icon_theme { get; set; }
 
+        // other
+        public uint32 scaling_factor { get; set; }
+
         private Interface () {
             base ("org.gnome.desktop.interface");
         }

@@ -19,12 +19,30 @@ namespace PantheonTweaks.Settings {
 
         private static WM? instance = null;
 
+        private static Gee.TreeMap<string, string>? titlebar_actions = null;
+
         public static WM get_default () {
             if (instance == null) {
                 instance = new WM ();
             }
 
             return instance;
+        }
+
+        public static Gee.TreeMap<string, string> get_titlebar_actions () {
+            if (titlebar_actions == null) {
+                titlebar_actions = new Gee.TreeMap<string, string> ();
+                titlebar_actions.set ("none", "None");
+                titlebar_actions.set ("lower", "Lower");
+                titlebar_actions.set ("menu", "Menu");
+                titlebar_actions.set ("minimize", "Minimize");
+                titlebar_actions.set ("toggle-maximize", "Toggle Maximize");
+                titlebar_actions.set ("toggle-maximize-horizontally", "Toggle Maximize Horizontally");
+                titlebar_actions.set ("toggle-maximize-vertically", "Toggle Maximize Vertically");
+                titlebar_actions.set ("toggle-shade", "Toggle Shade");
+            }
+
+            return titlebar_actions;
         }
     }
 }
