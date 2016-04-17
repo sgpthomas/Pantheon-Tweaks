@@ -26,6 +26,8 @@ namespace PantheonTweaks.Widgets {
             option.halign = Gtk.Align.FILL;
         } else if (option is Gtk.Scale) {
             option.halign = Gtk.Align.FILL;
+        } else if (option is Gtk.FontButton) {
+            option.halign = Gtk.Align.FILL;
         } else {
             option.halign = Gtk.Align.START;
         }

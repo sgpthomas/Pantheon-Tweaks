@@ -2,7 +2,8 @@
 namespace PantheonTweaks {
 
     public class Widgets.SettingsEditor : Gtk.Box {
-        private Gtk.Box content;
+        // private Gtk.Box content;
+        private Gtk.Stack content;
         private SettingsHeader header;
 
         //private Gtk.ScrolledWindow scroll;
@@ -11,7 +12,8 @@ namespace PantheonTweaks {
             Object (orientation: Gtk.Orientation.VERTICAL,
                     spacing: 0);
 
-            content = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            // content = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            content = new Gtk.Stack ();
             //scroll = new Gtk.ScrolledWindow (null, null);
 
             this.margin = 12;
@@ -27,22 +29,17 @@ namespace PantheonTweaks {
             //this.add (scroll);
         }
 
+        public void add_setting (Options.Option setting) {
+            content.add_named (setting, setting.get_title ());
+        }
+
         public void show_setting (Options.Option setting) {
             // update title
             header.set_icon_name (setting.get_icon_name ());
             header.set_title (setting.get_title ());
-            // update content
-            foreach (var child in content.get_children ()) {
-                child.destroy ();
-            }
-            //foreach (var child in scroll.get_children ()) {
-            //    child.destroy ();
-            //}
 
-            content.add (setting.get_content ());
+            content.set_visible_child_name (setting.get_title ());
             content.show_all ();
-            //scroll.add (setting.get_content ());
-            //scroll.show_all ();
         }
     }
 }

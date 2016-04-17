@@ -29,6 +29,7 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
     Widgets/SettingsEditor.vala
     Widgets/SettingsHeader.vala
     Widgets/SideBar.vala
+    Widgets/WindowControl.vala
     ${CMAKE_CURRENT_BINARY_DIR}/config.vala
 PACKAGES
     gtk+-3.0

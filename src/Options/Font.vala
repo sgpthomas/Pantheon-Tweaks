@@ -1,7 +1,7 @@
 
 namespace PantheonTweaks {
 
-    public class Options.Font : GLib.Object, Option {
+    public class Options.Font : Gtk.Box, Option {
 
         // interface methods
         public string get_icon_name () {
@@ -20,7 +20,7 @@ namespace PantheonTweaks {
             return _("System");
         }
 
-        public Gtk.Box get_content () {
+        public Font () {
             var grid = new Gtk.Grid ();
 
             grid.halign = Gtk.Align.CENTER;
@@ -72,9 +72,7 @@ namespace PantheonTweaks {
             });
 
             grid.show_all ();
-            var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-            box.add (grid);
-            return box;
+            this.add (grid);
         }
     }
 }

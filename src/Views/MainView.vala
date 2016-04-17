@@ -17,11 +17,17 @@ namespace PantheonTweaks {
             this.add1 (sidebar);
             this.add2 (scroll);
 
-            sidebar.select_row (sidebar.get_row_at_index (1));
+            sidebar.add_option.connect ((content) => {
+                editor.add_setting (content);
+            });
+
+            sidebar.build_ui ();
 
             sidebar.option_selected.connect ((content) => {
                 editor.show_setting (content);
             });
+
+            sidebar.select_row (sidebar.get_row_at_index (1));
         }
     }
 }

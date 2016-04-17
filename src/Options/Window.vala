@@ -1,7 +1,7 @@
 
 namespace PantheonTweaks {
 
-    public class Options.Window : GLib.Object, Options.Option {
+    public class Options.Window : Gtk.Box, Options.Option {
 
         // interface methods
         public string get_icon_name () {
@@ -20,7 +20,7 @@ namespace PantheonTweaks {
             return _("System");
         }
 
-        public Gtk.Box get_content () {
+        public Window () {
             /* Grid Setup */
             var grid = new Gtk.Grid ();
 
@@ -150,16 +150,18 @@ namespace PantheonTweaks {
             Widgets.add_category (grid, "Window Control Layout", ref row);
 
             // button layout widget
-            var button_layout = new Gtk.Label ("Button Layout Widget (NYI)");
+            var button_layout = new Widgets.WindowControl ();
+            description = "Changes where window controls will be located";
+            warning = "This widget is not fully implemented yet. Most combinations are currently possible but the widget may have glitches in rendering";
             Widgets.add_option (grid, "Window Control Layout", button_layout, ref row, () => {
-                    // reset
-                });
+                    Settings.WM.get_default ().schema.reset ("button-layout");
+                }, description, warning);
 
             /* HiDPi */
-            Widgets.add_category (grid, "HiDPI", ref row);
+            // Widgets.add_category (grid, "HiDPI", ref row);
 
             // window scaling
-            var scale_slider = new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0.0, 2.0, 1.0);
+            /* var scale_slider = new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0.0, 2.0, 1.0);
             scale_slider.set_value_pos (Gtk.PositionType.RIGHT);
             scale_slider.format_value.connect ((val) => {
                 if (val == 0) {
@@ -173,8 +175,9 @@ namespace PantheonTweaks {
                 }, description);
             scale_slider.set_value ((int) Settings.Interface.get_default ().scaling_factor);
             scale_slider.value_changed.connect (() => {
+                message (scale_slider.get_value ().to_string ());
                 Settings.Interface.get_default ().scaling_factor = (uint32) scale_slider.get_value ();
-            });
+            });*/
 
             /* Update all the things */
             Settings.WM.get_default ().changed.connect (() => {
@@ -183,14 +186,20 @@ namespace PantheonTweaks {
                 double_combo.set_active_id (Settings.WM.get_default ().action_double_click_titlebar);
                 middle_combo.set_active_id (Settings.WM.get_default ().action_middle_click_titlebar);
                 secondary_combo.set_active_id (Settings.WM.get_default ().action_right_click_titlebar);
-                // scale_slider.set_value (Settings.Interface.get_default ().scaling_factor);
             });
+
+            /* Settings.Interface.get_default ().changed.connect (() => {
+                scale_slider.set_value ((int) Settings.Interface.get_default ().scaling_factor);
+            }); */
 
             /* Add Grid to box and return it */
             grid.show_all ();
-            var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-            box.add (grid);
-            return box;
+            // var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            this.add (grid);
+        }
+
+        public void terminate () {
+            message ("something");
         }
     }
 }

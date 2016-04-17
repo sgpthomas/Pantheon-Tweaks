@@ -1,7 +1,7 @@
 
 namespace PantheonTweaks {
 
-    public class Options.Terminal : GLib.Object, Option {
+    public class Options.Terminal : Gtk.Box, Option {
 
         // interface methods
         public string get_icon_name () {
@@ -20,10 +20,8 @@ namespace PantheonTweaks {
             return _("Applications");
         }
 
-        public Gtk.Box get_content () {
-            var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-            box.add (new Gtk.Label ("terminal test"));
-            return box;
+        public Terminal () {
+            this.add (new Gtk.Label ("terminal test"));
         }
     }
 }

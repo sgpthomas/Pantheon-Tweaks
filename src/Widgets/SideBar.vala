@@ -4,6 +4,7 @@ namespace PantheonTweaks {
 
     public class Widgets.SideBar : Gtk.ListBox {
 
+        public signal void add_option (Options.Option setting);
         public signal void option_selected (Options.Option setting);
 
         private Gee.HashMap<string, int> category_map;
@@ -11,7 +12,6 @@ namespace PantheonTweaks {
         public SideBar () {
             category_map = new Gee.HashMap<string, int> ();
 
-            build_ui ();
             connect_signals ();
 
             this.width_request = 160;
@@ -33,11 +33,12 @@ namespace PantheonTweaks {
                 category_map.set (category, insert_index);
             }
 
+            add_option (setting);
             var item = new SideBarItem (setting);
             this.insert (item, insert_index);
         }
 
-        private void build_ui () {
+        public void build_ui () {
             add_setting (new Options.Appearance ());
             add_setting (new Options.Font ());
             add_setting (new Options.Window ());
